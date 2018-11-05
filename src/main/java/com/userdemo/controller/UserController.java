@@ -67,9 +67,7 @@ public class UserController {
 		} catch (Exception e) {
 			response = handleException(e);
 		}
-
 		return response;
-
 	}
 
 	@PutMapping("/{id}")

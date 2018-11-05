@@ -15,7 +15,6 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 			
-	@Override
 	public List<User> getAll() {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<User> theQuery = currentSession.createQuery("from User", User.class);
@@ -23,19 +22,16 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
-	@Override
 	public void save(User user) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(user);
 	}
 
-	@Override
 	public User get(Integer userId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		return currentSession.get(User.class, userId);
 	}
 
-	@Override
 	public void update(Integer userId, User user) {
 		// User user = null;
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -47,7 +43,6 @@ public class UserDaoImpl implements UserDao {
 		currentSession.save(oriUser);
 	}
 
-	@Override
 	public void delete(Integer id) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		User user = currentSession.get(User.class, id);

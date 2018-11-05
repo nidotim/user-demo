@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Transactional
-	@Override
 	public List<User> listUsers() throws Exception {
 		log.debug("enters listUsers ... ");
 		try {
@@ -33,9 +32,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	@Override
 	public User createUser(String name, String email) throws Exception {
 		log.debug("enters createUser ... ");
+		if (name == null || email == null) {
+			throw new Exception("name and email should not be null");
+		}
 		try {
 			User user = new User(name, email);
 			userDao.save(user);
@@ -47,7 +48,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	@Override
 	public User getUser(Integer userId) throws Exception {
 		log.debug("enters getUser ... ");
 		try {
@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	@Override
 	public void updateUser(Integer userId, User user) throws Exception {
 		log.debug("enters updateUser ... ");
 		try {
@@ -75,7 +74,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	@Override
 	public void deleteUser(Integer userId) throws Exception {
 		log.debug("enters deleteUser ... ");
 		try {

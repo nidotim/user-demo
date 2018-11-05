@@ -61,8 +61,12 @@ public class User {
 	}
 
 	public void updateAttrs(User user) {
-		setName(user.getName());
-		setEmail(user.getEmail());
+		if (null != user.getName()) {
+			setName(user.getName());
+		}
+		if (null != user.getEmail()) {
+			setEmail(user.getEmail());
+		}
 	}
 
 }
