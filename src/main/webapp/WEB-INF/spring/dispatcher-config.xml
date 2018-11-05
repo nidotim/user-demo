@@ -14,35 +14,57 @@
         http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<mvc:annotation-driven/>
+	
 	<!-- Add support for component scanning -->
 	<context:component-scan base-package="com.userdemo" />
 
 	<!-- Define Database DataSource / connection pool -->
 	<bean id="userDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
+        <!-- mysql -->
+        <!--
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/user_spring_demo?useSSL=false&amp;serverTimezone=UTC" />
         <property name="user" value="tasadm" />
-        <property name="password" value="tasadm" /> 
-
-        <!-- these are connection pool properties for C3P0 -->
-        <property name="minPoolSize" value="5" />
+        <property name="password" value="tasadm" />
+        -->
+         
+        <!-- H2 -->        
+        <property name="driverClass" value="org.h2.Driver" />
+        <property name="jdbcUrl" value="jdbc:h2:mem:user-demo;DB_CLOSE_DELAY=-1" />
+        <property name="user" value="sa" />
+        <property name="password" value="" />
+        
+        <property name="minPoolSize" value="1" />
         <property name="maxPoolSize" value="20" />
         <property name="maxIdleTime" value="30000" />
-	</bean>  
+	</bean>
 	
-    <!-- Setup Hibernate session factory -->
+	
+    <!-- Setup Hibernate session factory --> 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="userDataSource" />
 		<property name="packagesToScan" value="com.userdemo" />
 		<property name="hibernateProperties">
 		   <props>
+		   	  <!-- MySQL -->
+		   	  <!-- 
 		      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 		      <prop key="hibernate.show_sql">true</prop>
+		       -->
+		       
+		      <!-- H2 -->
+		      <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+		      <prop key="hibernate.show_sql">true</prop>
+		      
+		      
+		      <prop key="hibernate.hbm2ddl.auto">create</prop>
 		   </props>
 		</property>
-   </bean>	  
+   </bean>
+	  
 
     <!-- Setup Hibernate transaction manager -->
 	<bean id="myTransactionManager"
@@ -54,8 +76,3 @@
 	<tx:annotation-driven transaction-manager="myTransactionManager" />    
 
 </beans>
-
-
-
-
-
